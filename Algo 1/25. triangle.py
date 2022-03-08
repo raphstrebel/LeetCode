@@ -10,7 +10,6 @@ class Solution:
         r[0][0] = triangle[0][0]
         
         def minTotalRec(l, i):
-            #print(l, i)
             if r[l][i] < max_:
                 # we computed this already
                 return r[l][i]
