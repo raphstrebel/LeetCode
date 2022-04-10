@@ -1,6 +1,6 @@
 class Solution:
     def numDecodings(self, s: str) -> int:
-        
+        """O(n) space, O(n) time"""
         last_idx = len(s) - 1
         valid_first = set([str(i) for i in range(1, 10)])
         valid_pair = set([str(i) for i in range(10, 27)])
