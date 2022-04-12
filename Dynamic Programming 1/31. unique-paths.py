@@ -1,5 +1,15 @@
 class Solution:
-    def uniquePaths(self, m: int, n: int) -> int:
+    def uniquePathsComb(self, m: int, n: int) -> int:
+        """
+        Using combinatorics:
+        we can choose n-1 paths from (m-1) + (n-1) total cells
+        -> nCr(n-1,m+n-2) = (m+n-2)! / ((n-1)! (m+n-2-n+1)!)
+        = (m+n-2)! / ((n-1)! (m-1)!)
+        """
+        # or on python >= 3.8: math.comb(m + n - 2, n - 1)
+        return factorial(m+n-2)//(factorial(n-1)*factorial(m-1))
+    def uniquePathsDP(self, m: int, n: int) -> int:
+        """Naive using dynamic programming"""
         # r[i][j] contains the number of paths until (i,j)
         # initialized at 1 since only one path for borders
         r = [[1 for _ in range(m)] for _ in range(n)]
