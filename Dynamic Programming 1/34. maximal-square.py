@@ -1,5 +1,29 @@
 class Solution:
-    def maximalSquare(self, matrix: List[List[str]]) -> int:
+    def maximalSquareWithLinearSpace(self, matrix: List[List[str]]) -> int:
+        """Keeping O(M) additional space, runtime is O(N*M)"""
+        n = len(matrix)
+        m = len(matrix[0])
+        if n == 0 or m == 0:
+            return 0
+        
+        # r[j] keeps the max square length until column j
+        r = [0]*(m+1)
+        max_ = 0  # keep track of previous max
+        prev_val = 0 # store prev row and column value
+        for i in range(1, n+1):
+            for j in range(1, m+1):
+                tmp = r[j]
+                if matrix[i-1][j-1] == '1':
+                    # if any of current, previous column or row is 0, r[j] is one
+                    # otherwise add the minimum (since all need entries to be 1)
+                    r[j] = 1 + min(r[j-1], r[j], prev_val)
+                    max_ = max(r[j], max_)
+                else:
+                    r[j] = 0
+                prev_val = tmp
+        # max_ keeps length of square, not number of elements
+        return max_**2
+    def maximalSquareNaive(self, matrix: List[List[str]]) -> int:
         """Keeping O(N*M) additional space, runtime is O(N*M)"""
         n = len(matrix)
         m = len(matrix[0])
@@ -7,7 +31,7 @@ class Solution:
             return 0
         
         # r[i,j] keeps the max square length from (0,0) to (i-1,j-1)
-        r = [[0 for j in range(m+1)] for i in range(n+1)]
+        r = a = [[0]*(m+1) for _ in range(n+1)]
         max_ = 0  # keep track of previous max
         for i in range(1, n+1):
             for j in range(1, m+1):
