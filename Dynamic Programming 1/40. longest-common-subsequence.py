@@ -46,7 +46,7 @@ class Solution:
         return lcs_rec(0,0)
 
 
-    def longestCommonSubsequenceBottomUp(self, text1: str, text2: str) -> int:
+    def longestCommonSubsequenceBottomUpNaive(self, text1: str, text2: str) -> int:
         """Time O(N*M), Space O(N*M)"""
         n1 = len(text1)
         n2 = len(text2)
@@ -62,3 +62,31 @@ class Solution:
                 else:
                     r[i][j] = max(r[i-1][j], r[i][j-1])
         return r[n1][n2]
+
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        """Time O(N*M), Space O(min(N, M))"""
+        n1 = len(text1)
+        n2 = len(text2)
+        if n1 == 0 or n2 == 0:
+            return 0
+
+        # keep shortest text as text2
+        if n1 < n2:
+            # switch texts
+            text1, text2 = text2, text1
+            n1, n2 = n2, n1
+        
+        # keep previous longest common subsequence of text2
+        prev = [0 for _ in range(n2+1)]
+        for i in range(1, n1+1):
+            # keep current longest common subsequence of text2
+            curr = [0 for _ in range(n2+1)]
+            for j in range(1, n2+1):
+                if text1[i-1] == text2[j-1]:
+                    # update current at index j with 1 + max at index j-1
+                    curr[j] = 1 + prev[j-1]
+                else:
+                    # current at index j is max(lcs at j-1 and previous lcs at j)
+                    curr[j] = max(curr[j-1], prev[j])
+            prev = curr
+        return curr[n2]
