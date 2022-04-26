@@ -32,6 +32,10 @@ class UnionFind:
 
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        # A valid tree must have n-1 edges
+        if len(edges) != n-1:
+            return False
+        
         # initialize graph
         graph = UnionFind(n)
         
