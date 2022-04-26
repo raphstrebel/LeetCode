@@ -3,6 +3,7 @@ class UnionFind:
         """n is the number of nodes"""
         self.root = [i for i in range(n)]
         self.rank = [1] * n
+        self.num_sets = n
         
     def find(self, x):
         """Use path compression to update the root of x"""
@@ -25,18 +26,14 @@ class UnionFind:
                 # both ranks are equal, choose first root and increment rank
                 self.root[root_y] = self.root[root_x]
                 self.rank[root_x] += 1
+            self.num_sets -= 1
     
     def connected(self, x, y):
         """True iff x and y have the same root"""
         return self.find(x) == self.find(y)
-    
+
     def num_roots(self):
-        """Number of different roots (of disjoint sets)"""
-        roots = set()
-        for r in self.root:
-            # use find to update roots
-            roots.add(self.find(r))
-        return len(roots)
+        return self.num_sets
 
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
