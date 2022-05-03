@@ -1,5 +1,11 @@
 class Solution:
     def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        """
+        Runtime: O(E) to build linked list + O(E + V) to iterate over all neighbours of all nodes (in the worst case)
+                 -> O(E + V)
+        Space: O(E) for linked list + O(V) vertices in the stack 
+               -> O(E + V)
+        """
         if source == destination:
             return True
         if len(edges) == 0:
