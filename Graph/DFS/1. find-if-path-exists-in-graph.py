@@ -24,7 +24,7 @@ class Solution:
         stack.append(source)
         while len(stack) > 0:
             # retrieve first element of list
-            x = stack.pop(0)
+            x = stack.pop()
             # if the element is visited, all neighbours are in stack
             if x in visited:
                 continue

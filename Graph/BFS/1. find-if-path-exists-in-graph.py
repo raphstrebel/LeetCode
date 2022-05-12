@@ -17,9 +17,9 @@ class Solution:
         # start at source, no need to iterate over all connected components
         queue.append(source)
         while len(queue) > 0:
-            # retrieve last element of queue
-            x = queue.pop()
-            # if the element is visited, all neighbours are in stack
+            # retrieve first element of queue
+            x = queue.pop(0)
+            # if the element is visited, all neighbours are in queue
             if x in visited:
                 continue
             # add all neighbours of x that have not been visited
