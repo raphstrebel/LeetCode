@@ -41,18 +41,13 @@ class Solution:
         target = (n-1, n-1)
         queue = [(source, 1)]
         visited = set()
-        min_path = n*n+1
         # BFS starting at source
         while queue:
             node, path = queue.pop(0)
             if node == target:
-                min_path = min(min_path, path)
-                continue
+                return path
             for neigh in adj[node]:
                 if not neigh in visited:
                     queue.append((neigh, path+1))
                     visited.add(neigh)
-        if min_path == n*n+1:
-            return -1
-        return min_path
-        
+        return -1
