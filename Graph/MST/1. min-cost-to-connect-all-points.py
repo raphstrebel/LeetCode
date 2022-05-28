@@ -24,6 +24,17 @@ class UnionFind:
 
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        """
+        Build a complete graph by computing distances between all pairs of points. So E = V^2.
+        Runtime: O(E*log(E)) = O(V^2*log(V)) since log(V^2) = 2*log(V)
+            - O(V^2) = O(E) to build graph
+            - O(E*log(E)) for sorting
+            - O(alpha(V)) for Kruskal's algo using UnionFind (alpha is inverse Ackermann's function)
+        Space: O(E) = O(N^2)
+            - O(E) to store the graph
+            - let's assume in-place, or at most O(E) space
+            - O(V) = O(sqrt(E)) for UnionFind
+        """
         n = len(points)
         # build edges as (p_i_index, p_j_index, dist(p_i, p_j))
         edges = []
