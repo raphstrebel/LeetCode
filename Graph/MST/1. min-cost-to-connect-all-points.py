@@ -35,9 +35,13 @@ class Solution:
         # sort by ascending order of weights
         edges = sorted(edges, key=lambda x: x[2])
         graph = UnionFind(n)
-        total = 0
+        total_weight = 0
+        total_edges = 0
         for edge in edges:
             i, j, w = edge
             if graph.union(i, j):
-                total += w
-        return total
+                total_weight += w
+                total_edges += 1
+            if total_edges == n-1:
+                return total_weight
+        return total_weight
