@@ -23,7 +23,7 @@ class UnionFind:
         return False
 
 class Solution:
-    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+    def minCostConnectPointsKruskal(self, points: List[List[int]]) -> int:
         """
         Build a complete graph by computing distances between all pairs of points. So E = V^2.
         Runtime: O(E*log(E)) = O(V^2*log(V)) since log(V^2) = 2*log(V)
@@ -56,3 +56,43 @@ class Solution:
             if total_edges == n-1:
                 return total_weight
         return total_weight
+
+    def minCostConnectPointsPrim(self, points: List[List[int]]) -> int:
+        """
+        MST using Prim's algorithm.
+        Runtime O(N^2):
+            Select each node to be added to MST (N nodes). Every time a node
+            is added, min distances to every other node are updated -> O(N^2)
+        Space O(N):
+            Use a set of size N and and array of size N.
+        """
+        n = len(points)
+        if n == 0 or n == 1:
+            return 0
+        # minimum distances from MST to this each point
+        dist = [math.inf] * n
+        dist[0] = 0
+        
+        total = 0
+        included = set()
+        # MST has n-1 edges        
+        num_edges = 0
+        while num_edges != n:
+            # add minimum edge from MST to non-included node
+            min_ = math.inf
+            curr = -1
+            for i in range(n):
+                if not i in included and dist[i] < min_:
+                    curr = i
+                    min_ = dist[i]
+            # update total MST weight and included nodes
+            total += min_
+            included.add(curr)
+            num_edges += 1
+            # update min distances with edges from curr to non-included nodes
+            for i in range(n):
+                if not i in included:
+                    x1, y1 = points[curr]
+                    x2, y2 = points[i]
+                    dist[i] = min(dist[i], abs(x1 - x2) + abs(y1 - y2))
+        return total
